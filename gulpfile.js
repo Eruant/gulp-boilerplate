@@ -1,8 +1,10 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
+var browserify = require('gulp-browserify');
+var concat = require('gulp-concat');
 
-var scriptSrc = './src/js/*.js';
+var scriptSrc = './src/js/**/*.js';
 var scriptDest = './build/js';
 
 /* === DEFAULT ============================================================== */
@@ -19,7 +21,12 @@ gulp.watch(scriptSrc, function (event) {
 
 /* ==== TASKS =============================================================== */
 gulp.task('scripts', function () {
-  gulp.src(scriptSrc)
+  gulp.src(['src/js/base.js'])
+    .pipe(browserify({
+      insertGlobals: true,
+      debug: true
+    }))
+    .pipe(concat('bundle.js'))
     .pipe(uglify())
     .pipe(gulp.dest(scriptDest));
 });
