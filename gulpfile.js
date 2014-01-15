@@ -4,8 +4,17 @@ var uglify = require('gulp-uglify');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 
-var scriptSrc = './src/js/**/*.js';
-var scriptDest = './build/js';
+var files = {
+  scripts: {
+    src: {
+      root: 'src/js/base.js',
+      all: './src/js/**/*.js'
+    },
+    dest: {
+      bundle: 'bundle.js'
+    }
+  }
+};
 
 /* === DEFAULT ============================================================== */
 gulp.task('default', function () {
@@ -14,19 +23,19 @@ gulp.task('default', function () {
 
 /* === WATCH ================================================================ */
 
-gulp.watch(scriptSrc, function (event) {
+gulp.watch(files.scripts.src.all, function (event) {
   console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   gulp.run('scripts');
 });
 
 /* ==== TASKS =============================================================== */
 gulp.task('scripts', function () {
-  gulp.src(['src/js/base.js'])
+  gulp.src([files.scripts.src.root])
     .pipe(browserify({
       insertGlobals: true,
       debug: true
     }))
-    .pipe(concat('bundle.js'))
+    .pipe(concat(files.scripts.dest.bundle))
     .pipe(uglify())
     .pipe(gulp.dest(scriptDest));
 });
