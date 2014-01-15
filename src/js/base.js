@@ -1,10 +1,4 @@
-var app = {
-  echo: function (value) {
-    return !!value;
-  }
-};
+var circle = require('./modules/circle.js');
 
-console.log(app.echo("test"));
-console.log(app.echo(0));
-console.log(app.echo(false));
-console.log(app.echo([]));
+console.log(circle.area(4));
+console.log(circle.circumference(4));

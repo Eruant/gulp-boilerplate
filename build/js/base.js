@@ -1,1 +1,0 @@
-var app={echo:function(o){return!!o}};console.log(app.echo("test")),console.log(app.echo(0)),console.log(app.echo(!1)),console.log(app.echo([]));
