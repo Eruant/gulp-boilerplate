@@ -11,7 +11,8 @@ var files = {
       all: './src/js/**/*.js'
     },
     dest: {
-      bundle: 'bundle.js'
+      bundle: 'bundle.js',
+      all: './build/js'
     }
   }
 };
@@ -37,5 +38,5 @@ gulp.task('scripts', function () {
     }))
     .pipe(concat(files.scripts.dest.bundle))
     .pipe(uglify())
-    .pipe(gulp.dest(scriptDest));
+    .pipe(gulp.dest(files.scripts.dest.all));
 });
