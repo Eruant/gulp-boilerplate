@@ -1,3 +1,9 @@
+/*
+ * Gulp
+ */
+
+/*globals require, console*/
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
@@ -5,37 +11,32 @@ var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 
 var files = {
-  scripts: {
-    src: {
-      root: 'src/js/base.js',
-      all: './src/js/**/*.js'
-    },
-    dest: {
-      bundle: 'bundle.js',
-      all: './build/js'
+    scripts: {
+        src: {
+            root: 'src/js/base.js',
+            all: './src/js/**/*.js'
+        },
+        dest: {
+            bundle: 'base.min.js',
+            all: './build/js'
+        }
     }
-  }
 };
 
-/* === DEFAULT ============================================================== */
+// default
 gulp.task('default', function () {
-  gulp.run('scripts');
+    gulp.run('scripts');
 });
 
-/* === WATCH ================================================================ */
-
+// watch
 gulp.watch(files.scripts.src.all, function (event) {
-  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  gulp.run('scripts');
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    gulp.run('scripts');
 });
 
-/* ==== TASKS =============================================================== */
+// tasks
 gulp.task('scripts', function () {
-  gulp.src([files.scripts.src.root])
-    .pipe(browserify({
-      debug: true
-    }))
-    .pipe(concat(files.scripts.dest.bundle))
-    .pipe(uglify())
-    .pipe(gulp.dest(files.scripts.dest.all));
+    gulp.src([files.scripts.src.root]).pipe(browserify({
+        debug: true
+    })).pipe(concat(files.scripts.dest.bundle)).pipe(uglify()).pipe(gulp.dest(files.scripts.dest.all));
 });

@@ -9,3 +9,4 @@ You will require [node](http://nodejs.org) and [npm](https://npmjs.org) installe
 ## Setup
 
 Run `$ npm install`
+Run `$ npm install -g gulp`
