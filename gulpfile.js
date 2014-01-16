@@ -33,7 +33,6 @@ gulp.watch(files.scripts.src.all, function (event) {
 gulp.task('scripts', function () {
   gulp.src([files.scripts.src.root])
     .pipe(browserify({
-      insertGlobals: true,
       debug: true
     }))
     .pipe(concat(files.scripts.dest.bundle))
