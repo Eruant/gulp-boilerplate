@@ -95,11 +95,11 @@ gulp.task('release', ['compile'], function () {
   // release the files
   gulp.src('./package.json')
     .pipe(bump(bumpOptions))
-    .pipe(git.add())
-    .pipe(git.commit('updated version number'))
     .pipe(gulp.dest('./'));
 
   gulp.src('./')
+    .pipe(git.add())
+    .pipe(git.commit('updated version number'))
     .pipe(git.pull('origin', 'master'))
     .pipe(git.tag('v' + pkg.version, 'Releasing version v' + pkg.version))
     .pipe(git.push('origin', 'master'));
