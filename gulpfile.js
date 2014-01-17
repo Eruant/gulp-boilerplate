@@ -97,6 +97,9 @@ gulp.task('release', ['compile'], function () {
     .pipe(bump(bumpOptions))
     .pipe(gulp.dest('./'));
 
+  // reload the update package file
+  pkg = require('./package.json');
+
   gulp.src('./')
     .pipe(git.add())
     .pipe(git.commit('updated version number'))
