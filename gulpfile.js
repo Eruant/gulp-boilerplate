@@ -11,12 +11,14 @@ var git = require('gulp-git');
 var uglify = require('gulp-uglify');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
+var jshint = require('gulp-jshint');
+
 var pkg = require('./package.json');
 
 var files = {
   scripts: {
     src: {
-      root: 'src/js/base.js',
+      root: './src/js/base.js',
       all: './src/js/**/*.js'
     },
     dest: {
@@ -55,6 +57,10 @@ gulp.task('compile', function () {
  * scripts - parse and compile all javaScript files
  */
 gulp.task('scripts', function () {
+
+  gulp.src(files.scripts.src.all)
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
 
   gulp.src([files.scripts.src.root]).pipe(browserify({
     debug: true
