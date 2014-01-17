@@ -74,6 +74,7 @@ gulp.task('release', ['compile'], function () {
 
   // set up options
   var bumpOptions = {};
+  var versionNumber = pkg.version;
 
   switch (gulp.env.type) {
     case 'major':
@@ -97,15 +98,23 @@ gulp.task('release', ['compile'], function () {
     .pipe(bump(bumpOptions))
     .pipe(gulp.dest('./'));
 
-  // reload the update package file
-  pkg = require('./package.json');
-  console.log(pkg.version);
-
   gulp.src('./')
     .pipe(git.pull('origin', 'master'))
-    .pipe(git.tag('v' + pkg.version, 'Releasing version v' + pkg.version))
     .pipe(git.add())
     .pipe(git.commit('updated version number'))
     .pipe(git.push('origin', 'master'));
 
 });
+
+gulp.task('test', function () {
+  gulp.src('./')
+    .pipe(git.branch('feature'));
+});
+
+/**
+ * TODO create tasks for
+ * - new feature
+ * - complete feature
+ * - new test branch
+ * - push to dev
+ */
