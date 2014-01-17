@@ -98,11 +98,9 @@ gulp.task('release', ['compile'], function () {
     case 'patch':
       bumpOptions.type = 'patch';
       break;
-  }
-
-  if (!bumpOptions.type) {
-    console.log('Aborting: type not set (--type [major|minor|patch])');
-    return;
+    default:
+      bumpOptions.type = 'patch';
+      break;
   }
 
   // release the files
