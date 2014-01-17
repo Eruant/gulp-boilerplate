@@ -59,7 +59,7 @@ gulp.task('compile', function () {
 gulp.task('scripts', function () {
 
   gulp.src(files.scripts.src.all)
-    .pipe(jshint())
+    .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'));
 
   gulp.src([files.scripts.src.root]).pipe(browserify({
