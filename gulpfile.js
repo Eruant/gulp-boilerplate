@@ -26,31 +26,32 @@ var files = {
 
 // default
 gulp.task('default', function () {
-
   gulp.run('compile');
-
 });
 
 // watch
 gulp.watch(files.scripts.src.all, function (event) {
-
   console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   gulp.run('scripts');
-
 });
 
-/*
+/**
  * Tasks
- **/
+ * - compile
+ * - scripts
+ * - release
+ */
 
-// compile all files
+/**
+ * compile - compiles the whole src folder
+ */
 gulp.task('compile', function () {
-
   gulp.run('scripts');
-
 });
 
-// javaScript
+/**
+ * scripts - parse and compile all javaScript files
+ */
 gulp.task('scripts', function () {
 
   gulp.src([files.scripts.src.root]).pipe(browserify({
@@ -62,43 +63,28 @@ gulp.task('scripts', function () {
 
 });
 
-// update the package number
-gulp.task('release-patch', function () {
-
-  gulp.run('compile');
-
-  gulp.src('./package.json')
-    .pipe(bump())
-    .pipe(gulp.dest('./'));
-
-});
-
+/**
+ * Release - Use to publish the code
+ *
+ * @options --type [major|minor|patch]
+ */
 gulp.task('release', function () {
 
-  gulp.run('release-patch');
-
-});
-
-gulp.task('release-minor', function () {
-
+  // first compile all other tasks
   gulp.run('compile');
 
+  // set up options
+  var bumpOptions = {};
+
+  switch (gulp.env.type) {
+    case 'major': bumpOptions.type = 'major'; break;
+    case 'minor': bumpOptions.type = 'minor'; break;
+    case 'patch': bumpOptions.type = 'patch'; break;
+  }
+
+  // release the files
   gulp.src('./package.json')
-    .pipe(bump({
-      type: 'minor'
-    }))
-    .pipe(gulp.dest('./'));
-
-});
-
-gulp.task('release-major', function () {
-
-  gulp.run('compile');
-
-  gulp.src('./package.json')
-    .pipe(bump({
-      type: 'major'
-    }))
+    .pipe(bump(bumpOptions))
     .pipe(gulp.dest('./'));
 
 });
