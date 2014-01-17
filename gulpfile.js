@@ -7,9 +7,11 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bump = require('gulp-bump');
+var git = require('gulp-git');
 var uglify = require('gulp-uglify');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
+var pkg = require('./package.json');
 
 var files = {
   scripts: {
@@ -68,23 +70,35 @@ gulp.task('scripts', function () {
  *
  * @options --type [major|minor|patch]
  */
-gulp.task('release', function () {
-
-  // first compile all other tasks
-  gulp.run('compile');
+gulp.task('release', ['compile'], function () {
 
   // set up options
   var bumpOptions = {};
 
   switch (gulp.env.type) {
-    case 'major': bumpOptions.type = 'major'; break;
-    case 'minor': bumpOptions.type = 'minor'; break;
-    case 'patch': bumpOptions.type = 'patch'; break;
+    case 'major':
+      bumpOptions.type = 'major';
+      break;
+    case 'minor':
+      bumpOptions.type = 'minor';
+      break;
+    case 'patch':
+      bumpOptions.type = 'patch';
+      break;
+  }
+
+  if (!bumpOptions.type) {
+    console.log('Aborting: not type set (--type [major|minor|patch])');
+    return;
   }
 
   // release the files
   gulp.src('./package.json')
     .pipe(bump(bumpOptions))
     .pipe(gulp.dest('./'));
+
+  gulp.src('./')
+    .pipe(git.tag('v' + pkg.version, 'Releasing version v' + pkg.version))
+    .pipe(git.push('origin', 'master'));
 
 });
