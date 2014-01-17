@@ -101,10 +101,10 @@ gulp.task('release', ['compile'], function () {
   pkg = require('./package.json');
 
   gulp.src('./')
-    .pipe(git.add())
-    .pipe(git.commit('updated version number'))
     .pipe(git.pull('origin', 'master'))
     .pipe(git.tag('v' + pkg.version, 'Releasing version v' + pkg.version))
+    .pipe(git.add())
+    .pipe(git.commit('updated version number'))
     .pipe(git.push('origin', 'master'));
 
 });
