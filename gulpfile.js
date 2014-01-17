@@ -106,15 +106,12 @@ gulp.task('release', ['compile'], function () {
 
 });
 
-gulp.task('test', function () {
-  gulp.src('./')
-    .pipe(git.branch('feature'));
-});
-
 /**
  * TODO create tasks for
  * - new feature
  * - complete feature
  * - new test branch
  * - push to dev
+ *
+ * awaiting pull request for commands git.branch() git.merge() git.checkout()
  */
