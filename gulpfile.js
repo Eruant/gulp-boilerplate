@@ -95,6 +95,7 @@ gulp.task('release', ['compile'], function () {
   // release the files
   gulp.src('./package.json')
     .pipe(bump(bumpOptions))
+    .pipe(git.add())
     .pipe(git.commit('updated version number'))
     .pipe(gulp.dest('./'));
 
