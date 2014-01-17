@@ -1,32 +1,20 @@
 /*
  * Gulp
  */
-
-/*globals require, console*/
+/*globals require, console */
 
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+//var gutil = require('gulp-util');
 var bump = require('gulp-bump');
 var git = require('gulp-git');
 var uglify = require('gulp-uglify');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
+var compass = require('gulp-compass');
 
-var pkg = require('./package.json');
-
-var files = {
-  scripts: {
-    src: {
-      root: './src/js/base.js',
-      all: './src/js/**/*.js'
-    },
-    dest: {
-      bundle: 'base.min.js',
-      all: './build/js'
-    }
-  }
-};
+//var pkg = require('./package.json');
+var config = require('./config.json');
 
 // default
 gulp.task('default', function () {
@@ -34,17 +22,12 @@ gulp.task('default', function () {
 });
 
 // watch
-gulp.watch(files.scripts.src.all, function (event) {
+gulp.watch(config.scripts.src.all, function (event) {
   console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   gulp.run('scripts');
 });
 
-/**
- * Tasks
- * - compile
- * - scripts
- * - release
- */
+/* === Tasks ================================================================ */
 
 /**
  * compile - compiles the whole src folder
@@ -58,16 +41,16 @@ gulp.task('compile', function () {
  */
 gulp.task('scripts', function () {
 
-  gulp.src(files.scripts.src.all)
+  gulp.src(config.scripts.src.all)
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'));
 
-  gulp.src([files.scripts.src.root]).pipe(browserify({
+  gulp.src([config.scripts.src.root]).pipe(browserify({
     debug: true
   }))
-    .pipe(concat(files.scripts.dest.bundle))
+    .pipe(concat(config.scripts.dest.bundle))
     .pipe(uglify())
-    .pipe(gulp.dest(files.scripts.dest.all));
+    .pipe(gulp.dest(config.scripts.dest.all));
 
 });
 
@@ -75,7 +58,12 @@ gulp.task('scripts', function () {
  * styles - parse and compile all stylesheets
  */
 gulp.task('styles', function () {
-  // TODO complete styles
+  gulp.src(config.styles.src.root)
+    .pipe(compass({
+      config_file: config.styles.config,
+      css: 'stylesheets'
+    }))
+    .pipe(gulp.dest(config.styles.dest.bundle));
 });
 
 /**
@@ -102,7 +90,6 @@ gulp.task('release', ['compile'], function () {
 
   // set up options
   var bumpOptions = {};
-  var versionNumber = pkg.version;
   var message = gulp.env.msg;
 
   if (!message) {
@@ -111,18 +98,18 @@ gulp.task('release', ['compile'], function () {
   }
 
   switch (gulp.env.type) {
-    case 'major':
-      bumpOptions.type = 'major';
-      break;
-    case 'minor':
-      bumpOptions.type = 'minor';
-      break;
-    case 'patch':
-      bumpOptions.type = 'patch';
-      break;
-    default:
-      bumpOptions.type = 'patch';
-      break;
+  case 'major':
+    bumpOptions.type = 'major';
+    break;
+  case 'minor':
+    bumpOptions.type = 'minor';
+    break;
+  case 'patch':
+    bumpOptions.type = 'patch';
+    break;
+  default:
+    bumpOptions.type = 'patch';
+    break;
   }
 
   // release the files

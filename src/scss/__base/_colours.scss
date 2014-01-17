@@ -1,0 +1,118 @@
+/**
+ * @class css.base.colours
+ *
+ * Here we define the colour variables that are used throughout the other stylesheets
+ *
+ * ## Usage
+ * Import into your main file using
+ *
+ *     @import "__base/_colours.scss";
+ *
+ */
+
+
+/**
+ * Shades of grey Colours
+ *
+ */
+
+$color-menu-grey: #333333;
+$color-menu-grey-hover: #2d2829;
+$color-nav-grey: #999999;
+
+
+/**
+ * Primary Colours
+ *
+ */
+
+$color-orange: #ed8b00;
+$color-eggshell: #f7f5e8;
+$color-plum: #6f1f44;
+$color-earth: #665348;
+$color-sand: #e9e5c6;
+$color-red: #ee3124;
+$color-ryan: #00b9f2;
+
+
+/**
+ * Secondary Colours
+ *
+ */
+
+$color-violet: #726e7e;
+$color-palepeach: #d6afa0;
+$color-stonegreen: #c0cbb8;
+$color-pine: #8f9658;
+
+
+/**
+ * Collection Colours
+ *
+ */
+
+// @var {color} $color-putty - Colour
+$color-putty: #484848;
+// @var {color} $color-plum - Colour
+$color-plum: #6E1E44;
+// @var {color} $color-earth - Colour
+$color-earth: #665249;
+
+
+.theme-putty {
+	.theme-bg {
+		background-color: $color-putty;
+	}
+	.theme-color {
+		color: $color-putty;
+	}
+}
+
+.theme-orange {
+	.theme-bg {
+		background-color: $color-orange;
+	}
+	.theme-color {
+		color: $color-orange;
+	}
+}
+
+.theme-plum {
+	.theme-bg {
+		background-color: $color-plum;
+	}
+	.theme-color {
+		color: $color-plum;
+	}
+}
+
+.theme-earth {
+	.theme-bg {
+		background-color: $color-earth;
+	}
+	.theme-color {
+		color: $color-earth;
+	}
+}
+
+
+
+
+/**
+ * Social Colours
+ *
+ */
+
+// @var {color} $color-social-facebook - Colour
+$color-social-facebook: #385895;
+$color-social-facebook-hover: #999;
+
+$color-social-twitter: #27aae0;
+$color-social-twitter-hover: #999;
+
+$color-social-google: #d21c23;
+$color-social-google-hover: #999;
+
+$color-social-contact: #f04e29;
+$color-social-contact-hover: #999;
+

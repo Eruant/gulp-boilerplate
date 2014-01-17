@@ -1,0 +1,77 @@
+/**
+ * @class css.base.fonts
+ *
+ * Here we define the font styles
+ *
+ * ## Usage
+ * Import into your main file using
+ *
+ *     @import "__base/_fonts.scss";
+ *
+ */
+
+/**
+ * Declare your fonts here
+ */
+$font-roboto: 'Roboto', sans-serif;
+
+
+
+/**
+ * @cfg {String} html - The globally used font styles are declared here
+ */
+html {
+	font-size: 62.5%;
+	-webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+	font-family: $font-roboto;
+	word-wrap: break-word;
+}
+
+h1 {
+	@include font(27, 31, $font-roboto);
+    font-weight: 300;
+    color: #655248;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@include font(30, 34, $font-roboto);
+}
+
+p,
+li {
+	@include font(16, 26);
+}
+
+a {
+	text-decoration: none;
+    color: $color-plum;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+// Better font rendering
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+a,
+span,
+input,
+label,
+time {
+    @include anti-alias-text;
+}

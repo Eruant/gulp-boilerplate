@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "src": {
+      "root": "./src/js/base.js",
+      "all": "./src/js/**/*.js"
+    },
+    "dest": {
+      "bundle": "base.min.js",
+      "all": "./build/js"
+    }
+  },
+  "styles": {
+    "config": "./src/config.rb",
+    "src": {
+      "root": "./src/scss"
+    },
+    "dest": {
+      "bundle": "./build/css"
+    }
+  }
+}

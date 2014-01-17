@@ -1,0 +1,127 @@
+/**
+ * @class css.base.base
+ *
+ * This is for the remaining base/globally applied styles that cannot be defined in the other Base folder stylesheets (e.g. colours, fonts etc.)
+ *
+ * ## Usage
+ * Import into your main file using
+ *
+ *     @import "__base/base";
+ *
+ */
+
+
+/**
+ * Custom Resets
+ */
+ p, pre, blockquote, a, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    margin:0;
+    padding:0;
+}
+
+
+
+/**
+ * body styling
+ */
+body {
+	background-color: #f5f5f5;
+    padding-top: 66px;
+    overflow-x: hidden;
+
+    .no-js & {
+        padding: 0;
+    }
+}
+
+img {
+    // Responsive images
+    max-width: 100%; // Overide with width: 100% on case by case basis to allow images to fill their container
+    height: auto;
+    display:block;
+}
+
+iframe {
+    border: 0;
+    max-width: 100%;
+}
+
+.nav-fix {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 801;
+}
+
+
+/**
+* Fix the box sizing
+*/
+
+*,
+*:after,
+*:before {
+    @include box-sizing(border-box);
+}
+
+
+/**
+* Accessibility Links
+*/
+
+.acc-links {
+    top:80px;
+    left: 10px;
+    position: absolute;
+    z-index: 500;
+}
+
+.acc-links li a {
+	@include font(26, 30);
+    @include opacity(0.7);
+    color:#fff;
+    background:#000;
+    padding:10px;
+}
+
+
+/**
+* No Javascript/Browser Message
+*/
+
+.no-browser,
+.no-script {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #000;
+    color: #000;
+    display: block;
+    padding: 50px 20px;
+    text-align: center;
+    position:relative;
+    z-index: 999;
+
+    p {
+        @include font(22, 28);
+    }
+
+    a {
+        color: $color-orange;
+    }
+}
+
+
+/**
+* Globally used classes
+*/
+
+.caption {
+    @include font(16, 20, $font-roboto);
+    font-weight: 300;
+    border-left: 2px solid #f0921d;
+    padding: 3px 0 3px 15px;
+    margin: 15px 0 15px;
+    color: #655248;
+}
+
+
