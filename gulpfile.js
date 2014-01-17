@@ -99,6 +99,7 @@ gulp.task('release', ['compile'], function () {
 
   // reload the update package file
   pkg = require('./package.json');
+  console.log(pkg.version);
 
   gulp.src('./')
     .pipe(git.pull('origin', 'master'))
