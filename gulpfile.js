@@ -50,7 +50,7 @@ gulp.watch(files.scripts.src.all, function (event) {
  * compile - compiles the whole src folder
  */
 gulp.task('compile', function () {
-  gulp.run('scripts');
+  gulp.run('scripts', 'styles', 'markup', 'assets');
 });
 
 /**
@@ -72,11 +72,33 @@ gulp.task('scripts', function () {
 });
 
 /**
+ * styles - parse and compile all stylesheets
+ */
+gulp.task('styles', function () {
+  // TODO complete styles
+});
+
+/**
+ * markup - parse and compile all html / templates
+ */
+gulp.task('markup', function () {
+  // TODO complete markup
+});
+
+/**
+ * assets - compress all images
+ */
+gulp.task('assets', function () {
+  // TODO complete assets
+});
+
+/**
  * Release - Use to publish the code
  *
  * @options --type [major|minor|patch]
  */
 gulp.task('release', ['compile'], function () {
+  // TODO refine and complete this function - see notes at end of function
 
   // set up options
   var bumpOptions = {};
