@@ -81,6 +81,12 @@ gulp.task('release', ['compile'], function () {
   // set up options
   var bumpOptions = {};
   var versionNumber = pkg.version;
+  var message = gulp.env.msg;
+
+  if (!message) {
+    console.log('Aborting: commit message must be set (--msg "message")');
+    return;
+  }
 
   switch (gulp.env.type) {
     case 'major':
@@ -95,7 +101,7 @@ gulp.task('release', ['compile'], function () {
   }
 
   if (!bumpOptions.type) {
-    console.log('Aborting: not type set (--type [major|minor|patch])');
+    console.log('Aborting: type not set (--type [major|minor|patch])');
     return;
   }
 
@@ -107,7 +113,7 @@ gulp.task('release', ['compile'], function () {
   gulp.src('./')
     .pipe(git.pull('origin', 'master'))
     .pipe(git.add())
-    .pipe(git.commit('updated version number'))
+    .pipe(git.commit(message))
     .pipe(git.push('origin', 'master'));
 
 });
