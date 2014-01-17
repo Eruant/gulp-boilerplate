@@ -12,6 +12,7 @@ var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
+var minifyHTML = require('gulp-minify-html');
 
 //var pkg = require('./package.json');
 var config = require('./config.json');
@@ -70,7 +71,11 @@ gulp.task('styles', function () {
  * markup - parse and compile all html / templates
  */
 gulp.task('markup', function () {
-  // TODO complete markup
+  gulp.src(config.markup.src.all)
+    .pipe(minifyHTML({
+      comments: false
+    }))
+    .pipe(gulp.dest(config.markup.dest.all));
 });
 
 /**
