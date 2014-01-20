@@ -139,11 +139,12 @@ gulp.task('feature', function () {
       .pipe(git.checkout('dev'))
       .pipe(git.branch(gulp.env.new))
       .pipe(git.checkout(gulp.env.new));
-  } else if (gulp.env.complete) {
+  } else if (gulp.env.complete && gulp.env.complete !== true) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
       .pipe(git.merge(gulp.env.complete))
-      .pipe(git.branch(gulp.env.complete, '-d'));
+      .pipe(git.branch(gulp.env.complete, '-d'))
+      .pipe(git.push('origin', 'dev'));
   } else {
     console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
   }
@@ -154,5 +155,12 @@ gulp.task('readyToTest', function () {
   gulp.src('./')
     .pipe(git.checkout('test'))
     .pipe(git.merge('dev'))
+    .pipe(git.push('origin', 'test'))
     .pipe(git.checkout('dev'));
+});
+
+gulp.task('init', function () {
+  gulp.src('./')
+    .pipe(git.branch('dev'))
+    .pipe(git.branch('test'));
 });
