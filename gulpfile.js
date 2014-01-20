@@ -123,6 +123,8 @@ gulp.task('release', ['compile'], function () {
     .pipe(gulp.dest('./'));
 
   gulp.src('./')
+    .pipe(git.checkout('master'))
+    .pipe(git.merge('test'))
     .pipe(git.pull('origin', 'master'))
     .pipe(git.add())
     .pipe(git.commit(message))
@@ -143,17 +145,14 @@ gulp.task('feature', function () {
       .pipe(git.merge(gulp.env.complete))
       .pipe(git.branch(gulp.env.complete, '-d'));
   } else {
-    console.log('Aborting: use [--new "featureName" | --complete]');
+    console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
   }
 
 });
 
-/**
- * TODO create tasks for
- * - new feature
- * - complete feature
- * - new test branch
- * - push to dev
- *
- * awaiting pull request for commands git.branch() git.merge() git.checkout()
- */
+gulp.task('readyToTest', function () {
+  gulp.src('./')
+    .pipe(git.checkout('test'))
+    .pipe(git.merge('dev'))
+    .pipe(git.checkout('dev'));
+});
