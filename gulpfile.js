@@ -140,10 +140,8 @@ gulp.task('feature', function () {
   } else if (gulp.env.complete) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
-      .pipe(git.merge());
-
-    gulp.src('./', '-d')
-      .pipe(git.branch(gulp.env.complete));
+      .pipe(git.merge())
+      .pipe(git.branch(gulp.env.complete, '-d'));
   } else {
     console.log('Aborting: use [--new "featureName" | --complete]');
   }
