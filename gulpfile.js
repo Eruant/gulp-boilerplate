@@ -128,7 +128,9 @@ gulp.task('release', ['compile'], function () {
     .pipe(git.pull('origin', 'master'))
     .pipe(git.add())
     .pipe(git.commit(message))
-    .pipe(git.push('origin', 'master'));
+    .pipe(git.push('origin', 'master'))
+    .pipe(git.checkout('dev'))
+    .pipe(git.merge('master'));
 
 });
 
@@ -137,13 +139,14 @@ gulp.task('feature', function () {
   if (gulp.env.new && gulp.env.new !== true) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
-      .pipe(git.branch(gulp.env.new))
-      .pipe(git.checkout(gulp.env.new));
+      .pipe(git.pull('origin', 'dev'))
+      .pipe(git.branch("f_" + gulp.env.new))
+      .pipe(git.checkout("f_" + gulp.env.new));
   } else if (gulp.env.complete && gulp.env.complete !== true) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
-      .pipe(git.merge(gulp.env.complete))
-      .pipe(git.branch(gulp.env.complete, '-d'))
+      .pipe(git.merge("f_" + gulp.env.complete))
+      .pipe(git.branch("f_" + gulp.env.complete, '-d'))
       .pipe(git.push('origin', 'dev'));
   } else {
     console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
@@ -154,6 +157,7 @@ gulp.task('feature', function () {
 gulp.task('readyToTest', function () {
   gulp.src('./')
     .pipe(git.checkout('test'))
+    .pipe(git.pull('origin', 'test'))
     .pipe(git.merge('dev'))
     .pipe(git.push('origin', 'test'))
     .pipe(git.checkout('dev'));
@@ -163,4 +167,40 @@ gulp.task('init', function () {
   gulp.src('./')
     .pipe(git.branch('dev'))
     .pipe(git.branch('test'));
+});
+
+gulp.task('hotfix', function () {
+
+  var message = gulp.env.msg;
+
+  if (gulp.env.new && gulp.env.new !== true) {
+    gulp.src('./')
+      .pipe(git.checkout('master'))
+      .pipe(git.pull('origin', 'master'))
+      .pipe(git.branch("hf_" + gulp.env.new))
+      .pipe(git.checkout("hf_" + gulp.env.new));
+  } else if (gulp.env.complete && gulp.env.complete !== true) {
+
+    if (!message) {
+      console.log('Aborting: commit message must be set (--msg "message")');
+      return;
+    }
+
+    gulp.src('./package.json')
+      .pipe(bump({ type: 'patch' }))
+      .pipe(gulp.dest('./'));
+
+    gulp.src('./')
+      .pipe(git.add())
+      .pipe(git.commit(message))
+      .pipe(git.checkout('master'))
+      .pipe(git.merge("hf_" + gulp.env.complete))
+      .pipe(git.branch("hf_" + gulp.env.complete, '-d'))
+      .pipe(git.push('origin', 'master'))
+      .pipe(git.checkout('dev'))
+      .pipe(git.merge('master'));
+  } else {
+    console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
+  }
+
 });
