@@ -137,8 +137,8 @@ gulp.task('feature', function () {
   if (gulp.env.new && gulp.env.new !== true) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
-      .pipe(git.branch(gulp.env.name))
-      .pipe(git.checkout(gulp.env.name));
+      .pipe(git.branch(gulp.env.new))
+      .pipe(git.checkout(gulp.env.new));
   } else if (gulp.env.complete) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
