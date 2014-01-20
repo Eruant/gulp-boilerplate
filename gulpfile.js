@@ -128,7 +128,9 @@ gulp.task('release', ['compile'], function () {
     .pipe(git.pull('origin', 'master'))
     .pipe(git.add())
     .pipe(git.commit(message))
-    .pipe(git.push('origin', 'master'));
+    .pipe(git.push('origin', 'master'))
+    .pipe(git.checkout('dev'))
+    .pipe(git.merge('master'));
 
 });
 
@@ -137,6 +139,7 @@ gulp.task('feature', function () {
   if (gulp.env.new && gulp.env.new !== true) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
+      .pipe(git.pull('origin', 'dev'))
       .pipe(git.branch(gulp.env.new))
       .pipe(git.checkout(gulp.env.new));
   } else if (gulp.env.complete && gulp.env.complete !== true) {
@@ -154,6 +157,7 @@ gulp.task('feature', function () {
 gulp.task('readyToTest', function () {
   gulp.src('./')
     .pipe(git.checkout('test'))
+    .pipe(git.pull('origin', 'test'))
     .pipe(git.merge('dev'))
     .pipe(git.push('origin', 'test'))
     .pipe(git.checkout('dev'));
