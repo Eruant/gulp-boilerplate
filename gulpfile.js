@@ -130,6 +130,20 @@ gulp.task('release', ['compile'], function () {
 
 });
 
+gulp.task('feature', function () {
+
+  if (!gulp.env.name || gulp.env.name === true) {
+    console.log('Aborting: name should be set (--name "branchName")');
+    return;
+  }
+
+  gulp.src('./')
+    .pipe(git.checkout('dev'))
+    .pipe(git.branch(gulp.env.name))
+    .pipe(git.checkout(gulp.env.name));
+
+});
+
 /**
  * TODO create tasks for
  * - new feature
