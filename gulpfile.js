@@ -198,7 +198,8 @@ gulp.task('hotfix', function () {
       .pipe(git.branch("hf_" + gulp.env.complete, '-d'))
       .pipe(git.push('origin', 'master'))
       .pipe(git.checkout('dev'))
-      .pipe(git.merge('master'));
+      .pipe(git.merge('master'))
+      .pipe(git.push('origin', 'dev'));
   } else {
     console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
   }
