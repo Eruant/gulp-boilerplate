@@ -130,7 +130,8 @@ gulp.task('release', ['compile'], function () {
     .pipe(git.commit(message))
     .pipe(git.push('origin', 'master'))
     .pipe(git.checkout('dev'))
-    .pipe(git.merge('master'));
+    .pipe(git.merge('master'))
+    .pipe(git.push('origin', 'dev'));
 
 });
 
