@@ -140,7 +140,7 @@ gulp.task('feature', function () {
   } else if (gulp.env.complete) {
     gulp.src('./')
       .pipe(git.checkout('dev'))
-      .pipe(git.merge())
+      .pipe(git.merge(gulp.env.complete))
       .pipe(git.branch(gulp.env.complete, '-d'));
   } else {
     console.log('Aborting: use [--new "featureName" | --complete]');
