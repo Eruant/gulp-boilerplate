@@ -132,15 +132,21 @@ gulp.task('release', ['compile'], function () {
 
 gulp.task('feature', function () {
 
-  if (!gulp.env.name || gulp.env.name === true) {
-    console.log('Aborting: name should be set (--name "branchName")');
-    return;
-  }
+  if (gulp.env.new && gulp.env.new !== true) {
+    gulp.src('./')
+      .pipe(git.checkout('dev'))
+      .pipe(git.branch(gulp.env.name))
+      .pipe(git.checkout(gulp.env.name));
+  } else if (gulp.env.complete) {
+    gulp.src('./')
+      .pipe(git.checkout('dev'))
+      .pipe(git.merge());
 
-  gulp.src('./')
-    .pipe(git.checkout('dev'))
-    .pipe(git.branch(gulp.env.name))
-    .pipe(git.checkout(gulp.env.name));
+    gulp.src('./', '-d')
+      .pipe(git.branch(gulp.env.complete));
+  } else {
+    console.log('Aborting: use [--new "featureName" | --complete]');
+  }
 
 });
 
