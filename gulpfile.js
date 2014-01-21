@@ -94,21 +94,21 @@ gulp.task('markup', function () {
 });
 
 /**
- * init - use to create local branches
- **/
-gulp.task('init', function () {
-  gulp.src('./')
-    .pipe(git.branch('dev'))
-    .pipe(git.branch('test'));
-});
-
-/**
  * assets - compress all images
  */
 gulp.task('assets', function () {
   gulp.src(config.assets.img.src.all)
     .pipe(imagemin())
     .pipe(gulp.dest(config.assets.img.dest.all));
+});
+
+/**
+ * init - use to create local branches
+ **/
+gulp.task('init', function () {
+  gulp.src('./')
+    .pipe(git.branch('dev'))
+    .pipe(git.branch('test'));
 });
 
 /**
