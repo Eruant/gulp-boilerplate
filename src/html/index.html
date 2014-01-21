@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--[if IE 7]>         <html class="no-js lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie10 lt-ie9"> <![endif]-->
 <!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
@@ -12,15 +12,52 @@
         <!-- General -->
         <meta name="description" content="" />
 
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="bin/img/favicon/favicon.ico" />
+        <!-- Facebook -->
+        <meta property="og:title" content="" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="img/share/logo.jpg" />
+        <meta property="og:url" content="" />
+        <meta property="og:site_name" content="" />
+        <meta property="og:description" content="" />
 
-        <!--[if (gte IE 9) | (IEMobile)]><!-->
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="" />
+        <meta name="twitter:description" content="" />
+        <meta name="twitter:image" content="" />
+        <meta name="twitter:image" content="" />
+
+        <!-- Win8 Tile -->
+        <meta name="msapplication-TileImage" content=""/>
+        <meta name="msapplication-TileColor" content="#ed8b00"/>
+
+        <!-- Apple Touch Icons -->
+        <link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/favicon/apple-touch-icon-57x57-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/favicon/apple-touch-icon-72x72-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/favicon/apple-touch-icon-114x114-precomposed.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/favicon/apple-touch-icon-144x144-precomposed.png" />
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="img/favicon/favicon.ico" />
+
+        <!-- Custom Fonts -->
+        <link href='//fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
+
+
+
+
+        <!--[if (gt IE 8) | (IEMobile)]><!-->
             <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <!--<![endif]-->
         <!--[if (lt IE 9) & (!IEMobile)]>
             <link rel='stylesheet' id='ie-only-css' href='css/ie.css' />
         <![endif]-->
+        <!--[if lt IE 9]>
+            <script src="js/lib/html5shiv.js"></script>
+        <![endif]-->
+        <script src="js/lib/modernizr.custom.js"></script>
     </head>
     <body>
         <noscript>
@@ -45,7 +82,9 @@
 
         <footer class="footer"></footer>
 
-        <script src="js/bundle.min.js"></script>
+        <script data-main="js/common" src="js/lib/require.js"></script>
+        <script>require(['app/main-page1']);</script>
+
         <!--[if (lt IE 9) & (!IEMobile)]>
             <script src="js/lte-ie8.js"></script>
         <![endif]-->

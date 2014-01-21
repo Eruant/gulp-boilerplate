@@ -13,6 +13,7 @@ var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
 var minifyHTML = require('gulp-minify-html');
+var imagemin = require('gulp-imagemin');
 
 //var pkg = require('./package.json');
 var config = require('./config.json');
@@ -28,6 +29,20 @@ gulp.watch(config.scripts.src.all, function (event) {
   gulp.run('scripts');
 });
 
+gulp.watch(config.styles.src.all, function (event) {
+  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  gulp.run('styles');
+});
+
+gulp.watch(config.markup.src.all, function (event) {
+  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  gulp.run('markup');
+});
+
+gulp.watch(config.assets.img.src.all, function (event) {
+  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+  gulp.run('assets');
+});
 /* === Tasks ================================================================ */
 
 /**
@@ -82,7 +97,9 @@ gulp.task('markup', function () {
  * assets - compress all images
  */
 gulp.task('assets', function () {
-  // TODO complete assets
+  gulp.src(config.assets.img.src.all)
+    .pipe(imagemin())
+    .pipe(gulp.dest(config.assets.img.dest.all));
 });
 
 /**
@@ -130,7 +147,8 @@ gulp.task('release', ['compile'], function () {
     .pipe(git.commit(message))
     .pipe(git.push('origin', 'master'))
     .pipe(git.checkout('dev'))
-    .pipe(git.merge('master'));
+    .pipe(git.merge('master'))
+    .pipe(git.push('origin', 'dev'));
 
 });
 
