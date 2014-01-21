@@ -94,6 +94,15 @@ gulp.task('markup', function () {
 });
 
 /**
+ * init - use to create local branches
+ **/
+gulp.task('init', function () {
+  gulp.src('./')
+    .pipe(git.branch('dev'))
+    .pipe(git.branch('test'));
+});
+
+/**
  * assets - compress all images
  */
 gulp.task('assets', function () {
@@ -101,6 +110,45 @@ gulp.task('assets', function () {
     .pipe(imagemin())
     .pipe(gulp.dest(config.assets.img.dest.all));
 });
+
+/**
+ * Feature - use to create new feature branches
+ * 
+ * @options --new "branchName"
+ * @options --complete "branchName"
+ **/
+gulp.task('feature', function () {
+
+  if (gulp.env.new && gulp.env.new !== true) {
+    gulp.src('./')
+      .pipe(git.checkout('dev'))
+      .pipe(git.pull('origin', 'dev'))
+      .pipe(git.branch("f_" + gulp.env.new))
+      .pipe(git.checkout("f_" + gulp.env.new));
+  } else if (gulp.env.complete && gulp.env.complete !== true) {
+    gulp.src('./')
+      .pipe(git.checkout('dev'))
+      .pipe(git.merge("f_" + gulp.env.complete))
+      .pipe(git.branch("f_" + gulp.env.complete, '-d'))
+      .pipe(git.push('origin', 'dev'));
+  } else {
+    console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
+  }
+
+});
+
+/**
+ * readyToTest - use to merge `dev` changes into the test branch
+ **/
+gulp.task('readyToTest', function () {
+  gulp.src('./')
+    .pipe(git.checkout('test'))
+    .pipe(git.pull('origin', 'test'))
+    .pipe(git.merge('dev'))
+    .pipe(git.push('origin', 'test'))
+    .pipe(git.checkout('dev'));
+});
+
 
 /**
  * Release - Use to publish the code
@@ -152,41 +200,9 @@ gulp.task('release', ['compile'], function () {
 
 });
 
-gulp.task('feature', function () {
-
-  if (gulp.env.new && gulp.env.new !== true) {
-    gulp.src('./')
-      .pipe(git.checkout('dev'))
-      .pipe(git.pull('origin', 'dev'))
-      .pipe(git.branch("f_" + gulp.env.new))
-      .pipe(git.checkout("f_" + gulp.env.new));
-  } else if (gulp.env.complete && gulp.env.complete !== true) {
-    gulp.src('./')
-      .pipe(git.checkout('dev'))
-      .pipe(git.merge("f_" + gulp.env.complete))
-      .pipe(git.branch("f_" + gulp.env.complete, '-d'))
-      .pipe(git.push('origin', 'dev'));
-  } else {
-    console.log('Aborting: use [--new "featureName" | --complete "featureName"]');
-  }
-
-});
-
-gulp.task('readyToTest', function () {
-  gulp.src('./')
-    .pipe(git.checkout('test'))
-    .pipe(git.pull('origin', 'test'))
-    .pipe(git.merge('dev'))
-    .pipe(git.push('origin', 'test'))
-    .pipe(git.checkout('dev'));
-});
-
-gulp.task('init', function () {
-  gulp.src('./')
-    .pipe(git.branch('dev'))
-    .pipe(git.branch('test'));
-});
-
+/**
+ * hotfix - for fixing bugs on the live branch
+ **/
 gulp.task('hotfix', function () {
 
   var message = gulp.env.msg;
