@@ -25,5 +25,15 @@
     "dest": {
       "all": "./build"
     }
+  },
+  "assets": {
+    "img": {
+      "src": {
+        "all": "./src/img/**/*"
+      },
+      "dest": {
+        "all": "./build/img"
+      }
+    }
   }
 }
