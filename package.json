@@ -1,6 +1,6 @@
 {
   "name": "gulp-test",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "devDependencies": {
     "gulp-util": "~2.2.10",
     "gulp": "~3.3.4",
