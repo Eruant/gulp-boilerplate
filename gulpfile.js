@@ -74,12 +74,12 @@ gulp.task('scripts', function () {
  * styles - parse and compile all stylesheets
  */
 gulp.task('styles', function () {
-  gulp.src(config.styles.src.root)
+  gulp.src('./src/scss/*.scss')
     .pipe(compass({
-      config_file: config.styles.config,
-      css: 'stylesheets'
+      css: 'build/css',
+      sass: 'src/scss'
     }))
-    .pipe(gulp.dest(config.styles.dest.bundle));
+    .pipe(gulp.dest('build/css'));
 });
 
 /**
