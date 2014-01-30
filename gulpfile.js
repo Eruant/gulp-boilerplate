@@ -15,33 +15,32 @@ var compass = require('gulp-compass');
 var minifyHTML = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 
-//var pkg = require('./package.json');
-var config = require('./config.json');
-
 // default
 gulp.task('default', function () {
   gulp.run('compile');
 });
 
 // watch
-gulp.watch(config.scripts.src.all, function (event) {
-  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  gulp.run('scripts');
-});
+gulp.task('startWatch', function () {
+  gulp.watch('./src/js/**/*.js', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    gulp.run('scripts');
+  });
 
-gulp.watch(config.styles.src.all, function (event) {
-  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  gulp.run('styles');
-});
+  gulp.watch('./src/scss/**/*.scss', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    gulp.run('styles');
+  });
 
-gulp.watch(config.markup.src.all, function (event) {
-  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  gulp.run('markup');
-});
+  gulp.watch('./src/html/*.html', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    gulp.run('markup');
+  });
 
-gulp.watch(config.assets.img.src.all, function (event) {
-  console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  gulp.run('assets');
+  gulp.watch('./src/img/**/*', function (event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    gulp.run('assets');
+  });
 });
 /* === Tasks ================================================================ */
 
@@ -57,16 +56,16 @@ gulp.task('compile', function () {
  */
 gulp.task('scripts', function () {
 
-  gulp.src(config.scripts.src.all)
+  gulp.src('./src/js/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'));
 
-  gulp.src([config.scripts.src.root]).pipe(browserify({
+  gulp.src(['./src/js/base.js']).pipe(browserify({
     debug: true
   }))
-    .pipe(concat(config.scripts.dest.bundle))
+    .pipe(concat('bundle.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(config.scripts.dest.all));
+    .pipe(gulp.dest('./build/js'));
 
 });
 
@@ -86,20 +85,20 @@ gulp.task('styles', function () {
  * markup - parse and compile all html / templates
  */
 gulp.task('markup', function () {
-  gulp.src(config.markup.src.all)
+  gulp.src('./src/html/*.html')
     .pipe(minifyHTML({
       comments: false
     }))
-    .pipe(gulp.dest(config.markup.dest.all));
+    .pipe(gulp.dest('./build'));
 });
 
 /**
  * assets - compress all images
  */
 gulp.task('assets', function () {
-  gulp.src(config.assets.img.src.all)
+  gulp.src('./src/img/**/*')
     .pipe(imagemin())
-    .pipe(gulp.dest(config.assets.img.dest.all));
+    .pipe(gulp.dest('./build/img'));
 });
 
 /**
