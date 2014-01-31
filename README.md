@@ -22,7 +22,7 @@ Run `$ npm install`
 This task compiles all source files
 
 ### scripts
-This task validates the JavaScript and compiles it
+This task validates the JavaScript, runs tests and compiles it
 
 ### styles
 This task runs compass to compile the SCSS files into CSS
