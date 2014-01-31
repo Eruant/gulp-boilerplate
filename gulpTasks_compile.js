@@ -11,6 +11,7 @@ var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
 var minifyHTML = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
+var jasmine = require('gulp-jasmine');
 
 exports.addTasks = function () {
 
@@ -29,6 +30,9 @@ exports.addTasks = function () {
     gulp.src('./src/js/**/*.js')
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('default'));
+
+    gulp.src('./tests/*.js')
+      .pipe(jasmine());
 
     gulp.src(['./src/js/base.js']).pipe(browserify({
       debug: true
