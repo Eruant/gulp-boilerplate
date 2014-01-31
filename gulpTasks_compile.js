@@ -31,7 +31,7 @@ exports.addTasks = function () {
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('default'));
 
-    gulp.src('./tests/*.js')
+    gulp.src('./test/*.js')
       .pipe(jasmine());
 
     gulp.src(['./src/js/base.js']).pipe(browserify({
