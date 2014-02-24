@@ -11,6 +11,4 @@ compileTasks.addTasks();
 gitTasks.addTasks();
 
 // default
-gulp.task('default', function () {
-  gulp.run('compile');
-});
+gulp.task('default', ['compile']);
