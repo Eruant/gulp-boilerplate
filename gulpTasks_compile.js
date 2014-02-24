@@ -1,7 +1,7 @@
 /**
  * gulpTasks_compile
  **/
-/*globals require, exports, console */
+/*globals require, exports, console, setInterval */
 
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
@@ -12,6 +12,7 @@ var compass = require('gulp-compass');
 var minifyHTML = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 var jasmine = require('gulp-jasmine');
+var browserSync = require('browser-sync');
 
 exports.addTasks = function () {
 
@@ -110,6 +111,14 @@ exports.addTasks = function () {
     return gulp.watch('./src/img/**/*', function (event) {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
       gulp.run('assets');
+    });
+  });
+
+  gulp.task('server', ['watch'], function () {
+    browserSync.init(['./src/**/*.scss', './src/**/*.html', './src/**/*.js'], {
+      server: {
+        baseDir: './bin'
+      }
     });
   });
 

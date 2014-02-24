@@ -13,6 +13,7 @@
     "gulp-compass": "~1.0.6",
     "gulp-minify-html": "~0.1.0",
     "gulp-imagemin": "~0.1.4",
-    "gulp-jasmine": "~0.1.2"
+    "gulp-jasmine": "~0.1.2",
+    "browser-sync": "~0.6.1"
   }
 }
