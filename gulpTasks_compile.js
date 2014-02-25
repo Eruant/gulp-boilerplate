@@ -87,35 +87,23 @@ exports.addTasks = function () {
   gulp.task('watch', ['watch-scripts', 'watch-styles', 'watch-markup', 'watch-assets']);
 
   gulp.task('watch-scripts', function () {
-    return gulp.watch('./src/js/**/*.js', function (event) {
-      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-      gulp.run('scripts');
-    });
+    return gulp.watch('./src/js/**/*.js', ['scripts']);
   });
 
   gulp.task('watch-styles', function () {
-    return gulp.watch('./src/scss/**/*.scss', function (event) {
-      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-      gulp.run('styles');
-    });
+    return gulp.watch('./src/scss/**/*.scss', ['styles']);
   });
 
   gulp.task('watch-markup', function () {
-    return gulp.watch('./src/html/*.html', function (event) {
-      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-      gulp.run('markup');
-    });
+    return gulp.watch('./src/html/*.html', ['markup']);
   });
 
   gulp.task('watch-assets', function () {
-    return gulp.watch('./src/img/**/*', function (event) {
-      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-      gulp.run('assets');
-    });
+    return gulp.watch('./src/img/**/*', ['assets']);
   });
 
   gulp.task('server', ['watch'], function () {
-    browserSync.init(['./src/**/*.scss', './src/**/*.html', './src/**/*.js'], {
+    browserSync.init(['bin/css/root.css', 'bin/**/*.js', 'bin/**/*.html'], {
       server: {
         baseDir: './bin'
       }
