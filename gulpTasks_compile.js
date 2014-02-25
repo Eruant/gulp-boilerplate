@@ -1,7 +1,7 @@
 /**
  * gulpTasks_compile
  **/
-/*globals require, exports, console, setInterval */
+/*globals require, exports, console */
 
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
@@ -87,26 +87,36 @@ exports.addTasks = function () {
   gulp.task('watch', ['watch-scripts', 'watch-styles', 'watch-markup', 'watch-assets']);
 
   gulp.task('watch-scripts', function () {
-    return gulp.watch('./src/js/**/*.js', ['scripts']);
+    return gulp.watch('./src/js/**/*.js', function () {
+      gulp.run('scripts');
+    });
   });
 
   gulp.task('watch-styles', function () {
-    return gulp.watch('./src/scss/**/*.scss', ['styles']);
+    return gulp.watch('./src/scss/**/*.scss', function () {
+      gulp.run('styles');
+    });
   });
 
   gulp.task('watch-markup', function () {
-    return gulp.watch('./src/html/*.html', ['markup']);
+    return gulp.watch('./src/html/*.html', function () {
+      gulp.run('markup');
+    });
   });
 
   gulp.task('watch-assets', function () {
-    return gulp.watch('./src/img/**/*', ['assets']);
+    return gulp.watch('./src/img/**/*', function () {
+      gulp.run('assets');
+    });
   });
 
-  gulp.task('server', ['watch'], function () {
-    browserSync.init(['bin/css/root.css', 'bin/**/*.js', 'bin/**/*.html'], {
+  gulp.task('server', ['compile', 'watch'], function () {
+    browserSync.init(['bin/css/*.css', 'bin/**/*.js', 'bin/**/*.html'], {
       server: {
         baseDir: './bin'
-      }
+      },
+      injectChanges: false,
+      reloadDelay: 2000
     });
   });
 
