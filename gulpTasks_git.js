@@ -96,12 +96,13 @@ exports.addTasks = function () {
 
     gulp.src('./')
       .pipe(git.checkout('master'))
-      .pipe(git.merge('test'))
       .pipe(git.pull('origin', 'master'))
+      .pipe(git.merge('test'))
       .pipe(git.add())
       .pipe(git.commit(message))
       .pipe(git.push('origin', 'master'))
       .pipe(git.checkout('dev'))
+      .pipe(git.pull('origin', 'dev'))
       .pipe(git.merge('master'))
       .pipe(git.push('origin', 'dev'));
 
