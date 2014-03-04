@@ -11,7 +11,7 @@ var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
 var minifyHTML = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
-var jasmine = require('gulp-jasmine');
+var mocha = require('gulp-mocha');
 var browserSync = require('browser-sync');
 
 exports.addTasks = function () {
@@ -37,7 +37,7 @@ exports.addTasks = function () {
 
   gulp.task('script-test', function () {
     return gulp.src('./test/*.js')
-      .pipe(jasmine());
+      .pipe(mocha());
   });
 
   gulp.task('script-bundle', function () {
